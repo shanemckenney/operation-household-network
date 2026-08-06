@@ -12,16 +12,63 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col items-center p-4 selection:bg-cyan-500 selection:text-slate-950">
 
+  <!-- TOP GLOBAL NAV BAR -->
+  <header class="w-full max-w-4xl flex justify-between items-center mb-6 mt-2">
+    <div>
+      <span class="text-cyan-400 text-xs font-mono tracking-widest uppercase font-bold">Military Cyber Division</span>
+      <h1 class="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
+        OPERATION: NETWORK
+      </h1>
+    </div>
+    <!-- Switch Role Button (Hidden automatically for Players!) -->
+    <button id="switch-role-btn" onclick="showRoleLauncher()" class="text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition shadow-md">
+      <span>🔄</span> Switch Station
+    </button>
+  </header>
+
+  <!-- =================================================================== -->
+  <!-- 0. IDIOT-PROOF ROLE LAUNCHER (Shown when visiting base URL)          -->
+  <!-- =================================================================== -->
+  <div id="role-launcher" class="w-full max-w-xl flex flex-col items-center text-center my-auto py-6">
+    <div class="mb-6">
+      <h2 class="text-2xl md:text-3xl font-black text-white mb-2">SELECT YOUR STATION</h2>
+      <p class="text-xs text-slate-400">Choose how you are joining Operation: Household Network</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 w-full">
+      <!-- Button 1: Player / Family -->
+      <button onclick="setRole('player')" class="bg-gradient-to-r from-cyan-950 to-slate-900 border-2 border-cyan-500/50 hover:border-cyan-400 p-5 rounded-2xl text-left flex items-center gap-4 transition shadow-xl group">
+        <span class="text-4xl bg-cyan-900/40 p-3 rounded-xl border border-cyan-700/50">📱</span>
+        <div>
+          <h3 class="font-black text-lg text-cyan-400 group-hover:text-cyan-300">FAMILY SQUAD / PLAYER</h3>
+          <p class="text-xs text-slate-300">Enlist team name & play the live quiz on your smartphone.</p>
+        </div>
+      </button>
+
+      <!-- Button 2: Host / Presenter -->
+      <button onclick="setRole('presenter')" class="bg-gradient-to-r from-teal-950 to-slate-900 border-2 border-teal-500/50 hover:border-teal-400 p-5 rounded-2xl text-left flex items-center gap-4 transition shadow-xl group">
+        <span class="text-4xl bg-teal-900/40 p-3 rounded-xl border border-teal-700/50">📺</span>
+        <div>
+          <h3 class="font-black text-lg text-teal-400 group-hover:text-teal-300">HOST / ZOOM PRESENTER</h3>
+          <p class="text-xs text-slate-300">Open Zoom screen-share board + Quiz Launcher controls.</p>
+        </div>
+      </button>
+
+      <!-- Button 3: Scorekeeper -->
+      <button onclick="setRole('scorekeeper')" class="bg-gradient-to-r from-amber-950 to-slate-900 border-2 border-amber-500/50 hover:border-amber-400 p-5 rounded-2xl text-left flex items-center gap-4 transition shadow-xl group">
+        <span class="text-4xl bg-amber-900/40 p-3 rounded-xl border border-amber-700/50">⚡</span>
+        <div>
+          <h3 class="font-black text-lg text-amber-400 group-hover:text-amber-300">SCOREKEEPER (Kristina)</h3>
+          <p class="text-xs text-slate-300">Quick-tap dashboard to award points (+10, +30, +50).</p>
+        </div>
+      </button>
+    </div>
+  </div>
+
   <!-- =================================================================== -->
   <!-- 1. PRESENTER VIEW (?role=presenter) - ZOOM SHARE & QUIZ CONTROL    -->
   <!-- =================================================================== -->
   <div id="role-presenter" class="hidden w-full max-w-4xl flex flex-col items-center">
-    <header class="text-center my-4">
-      <span class="text-cyan-400 text-sm font-mono tracking-widest uppercase font-bold">CompTIA Cyber Division</span>
-      <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
-        OPERATION: HOUSEHOLD NETWORK
-      </h1>
-    </header>
 
     <!-- PRESENTER QUIZ CONTROL DECK -->
     <section class="w-full bg-slate-900 border border-slate-800 p-5 rounded-2xl mb-6 shadow-2xl">
@@ -92,15 +139,9 @@
   </div>
 
   <!-- =================================================================== -->
-  <!-- 3. STUDENT / FAMILY MOBILE VIEW (Default) - RUNS ON SMARTPHONES     -->
+  <!-- 3. STUDENT / FAMILY MOBILE VIEW (?role=player)                      -->
   <!-- =================================================================== -->
   <div id="role-player" class="hidden w-full max-w-md flex flex-col items-center">
-    <header class="text-center my-4">
-      <span class="text-cyan-400 text-xs font-mono tracking-widest uppercase">Military Cyber Division</span>
-      <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-        OPERATION: NETWORK
-      </h1>
-    </header>
 
     <!-- Sign-In Box -->
     <div id="player-signin" class="w-full bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl text-center">
@@ -178,18 +219,46 @@
     ];
 
     // -------------------------------------------------------------------
-    // ROUTE PARSER: DETERMINES WHICH ROLE VIEW TO DISPLAY
+    // ROUTE PARSER & ROLE CONTROLLER
     // -------------------------------------------------------------------
-    const urlParams = new URLSearchParams(window.location.search);
-    const userRole = urlParams.get('role');
+    function hideAllViews() {
+      document.getElementById('role-launcher').classList.add('hidden');
+      document.getElementById('role-presenter').classList.add('hidden');
+      document.getElementById('role-scorekeeper').classList.add('hidden');
+      document.getElementById('role-player').classList.add('hidden');
+    }
 
-    if (userRole === 'presenter') {
-      document.getElementById('role-presenter').classList.remove('hidden');
-    } else if (userRole === 'scorekeeper') {
-      document.getElementById('role-scorekeeper').classList.remove('hidden');
+    function setRole(role) {
+      hideAllViews();
+      const switchBtn = document.getElementById('switch-role-btn');
+
+      if (role === 'player') {
+        document.getElementById('role-player').classList.remove('hidden');
+        if (switchBtn) switchBtn.classList.add('hidden'); // Lock player in!
+      } else if (role === 'presenter') {
+        document.getElementById('role-presenter').classList.remove('hidden');
+        if (switchBtn) switchBtn.classList.remove('hidden');
+      } else if (role === 'scorekeeper') {
+        document.getElementById('role-scorekeeper').classList.remove('hidden');
+        if (switchBtn) switchBtn.classList.remove('hidden');
+      }
+    }
+
+    function showRoleLauncher() {
+      hideAllViews();
+      document.getElementById('role-launcher').classList.remove('hidden');
+      const switchBtn = document.getElementById('switch-role-btn');
+      if (switchBtn) switchBtn.classList.remove('hidden');
+    }
+
+    // Read initial URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialRole = urlParams.get('role');
+
+    if (initialRole) {
+      setRole(initialRole);
     } else {
-      // Default: Player Mobile View
-      document.getElementById('role-player').classList.remove('hidden');
+      showRoleLauncher();
     }
 
     // Player State Variables
