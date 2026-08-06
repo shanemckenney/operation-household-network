@@ -9,6 +9,16 @@
   <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <style>
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+  </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col items-center p-3 selection:bg-cyan-500 selection:text-slate-950">
 
@@ -56,7 +66,7 @@
         <span class="text-4xl bg-amber-900/40 p-3 rounded-xl border border-amber-700/50">⚡</span>
         <div>
           <h3 class="font-black text-lg text-amber-400 group-hover:text-amber-300">SCOREKEEPER (Kristina)</h3>
-          <p class="text-xs text-slate-300">Phase 3 manual point adjuster (+50 Spotlight, +30 Chat 1st).</p>
+          <p class="text-xs text-slate-300">Phase 3 manual point adjuster (+50 Spotlight & random fun bonuses).</p>
         </div>
       </button>
     </div>
@@ -126,30 +136,38 @@
       </div>
     </div>
 
-    <!-- PHASE 1 DECK: HARDWARE SCAVENGER HUNT (4-COLUMN ROW, ZERO-SCROLL) -->
-    <div id="deck-phase-1" class="hidden w-full space-y-3">
-      <!-- HERO ANNOUNCEMENT BANNER -->
-      <div class="bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border border-cyan-500/60 px-6 py-3 rounded-2xl shadow-xl text-center">
-        <div class="flex justify-between items-center max-w-5xl mx-auto">
-          <div class="text-left">
-            <span class="text-amber-400 font-mono text-xs font-black uppercase tracking-widest block animate-pulse">
-              ⚡ MISSION 1: PHYSICAL RECON SPRINT 🏃‍♂️💨
-            </span>
-            <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-white to-cyan-300">
-              HARDWARE SCAVENGER HUNT!
-            </h2>
-          </div>
-          <!-- RULE CALLOUT -->
-          <div class="flex gap-4 bg-slate-950/80 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold text-white shadow-inner">
-            <div><span class="text-cyan-400 font-mono uppercase">SPOUSES & KIDS:</span> Find an item! 🏃‍♀️</div>
-            <span class="text-slate-600 font-bold">|</span>
-            <div><span class="text-amber-300 font-mono uppercase">STUDENTS:</span> Explain WHY on camera (15s)! 🎓</div>
-          </div>
+    <!-- PHASE 1 DECK: HARDWARE SCAVENGER HUNT (VERTICAL FLOW RESTRUCTURE) -->
+    <div id="deck-phase-1" class="hidden w-full space-y-2.5">
+      
+      <!-- 1. TITLE CARD AT TOP -->
+      <div class="bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border border-cyan-500/60 py-2.5 px-6 rounded-2xl shadow-xl text-center">
+        <span class="text-amber-400 font-mono text-xs font-black uppercase tracking-widest block animate-pulse">
+          ⚡ MISSION 1: PHYSICAL RECON SPRINT 🏃‍♂️💨
+        </span>
+        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-white to-cyan-300">
+          HARDWARE SCAVENGER HUNT!
+        </h2>
+      </div>
+
+      <!-- 2. ROLE CALLOUT BOX DIRECTLY UNDER TITLE CARD -->
+      <div class="w-full bg-slate-900 border border-slate-800 p-3 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-8 text-center">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🏃‍♀️</span>
+          <p class="text-xs md:text-sm font-extrabold text-white">
+            <span class="text-cyan-400 uppercase font-mono">SPOUSES & KIDS:</span> Sprint to find an item below!
+          </p>
+        </div>
+        <span class="hidden sm:inline text-slate-700 font-bold">|</span>
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🎓</span>
+          <p class="text-xs md:text-sm font-extrabold text-white">
+            <span class="text-amber-300 uppercase font-mono">VETERAN STUDENTS:</span> Explain WHY it fits on camera (15s)!
+          </p>
         </div>
       </div>
 
-      <!-- 4 TARGET CARDS IN A SINGLE 4-COLUMN ROW -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <!-- 3. 4 TARGET CARDS IN A SINGLE 4-COLUMN ROW -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
         
         <!-- TARGET 1: FIREWALL -->
         <div class="bg-slate-900 border-2 border-rose-500/60 p-4 rounded-2xl shadow-xl flex flex-col justify-between hover:border-rose-400 transition">
@@ -246,7 +264,7 @@
       </div>
     </div>
 
-    <!-- PHASE 2 DECK: SQUAD TRIVIA SPRINT (2-COLUMN SPLIT, ZERO-SCROLL) -->
+    <!-- PHASE 2 DECK: SQUAD TRIVIA SPRINT (TIME-DECAY & COMPLETION TRACKING) -->
     <div id="deck-phase-2" class="hidden w-full space-y-3">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         
@@ -254,21 +272,25 @@
         <div class="lg:col-span-7 space-y-3">
           <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-2">
-              <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-wider">🎯 Quiz Launcher Deck</h2>
+              <div>
+                <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-wider">🎯 Quiz Launcher Deck</h2>
+                <span class="text-[10px] text-slate-400 font-mono">Time-Decay Scoring: 20 PTS ➔ 10 PTS min</span>
+              </div>
               <span id="p-status" class="text-xs font-mono bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full">Idle</span>
             </div>
             
-            <div class="grid grid-cols-5 gap-1.5 mb-2">
-              <button onclick="launchQuestion(0)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Launch Q1</button>
-              <button onclick="launchQuestion(1)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Launch Q2</button>
-              <button onclick="launchQuestion(2)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Launch Q3</button>
-              <button onclick="launchQuestion(3)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Launch Q4</button>
-              <button onclick="launchQuestion(4)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Launch Q5</button>
+            <!-- Launch Buttons with Completion Badging -->
+            <div id="quiz-btn-grid" class="grid grid-cols-5 gap-1.5 mb-2">
+              <button id="qbtn-0" onclick="launchQuestion(0)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Q1</button>
+              <button id="qbtn-1" onclick="launchQuestion(1)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Q2</button>
+              <button id="qbtn-2" onclick="launchQuestion(2)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Q3</button>
+              <button id="qbtn-3" onclick="launchQuestion(3)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Q4</button>
+              <button id="qbtn-4" onclick="launchQuestion(4)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs">Q5</button>
             </div>
 
             <div class="flex gap-2">
               <button onclick="scoreCurrentQuestion()" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-2 rounded-xl text-xs shadow-lg">
-                ✅ Evaluate Answers & Award Points (+20)
+                ✅ Evaluate Answers & Award Points
               </button>
               <button onclick="closeQuiz()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 font-bold py-2 px-3 rounded-xl text-xs">
                 Close Quiz
@@ -296,20 +318,107 @@
       </div>
     </div>
 
-    <!-- PHASE 3 DECK: SECRET SPOTLIGHT CHALLENGE (3-COLUMN GRID) -->
+    <!-- PHASE 3 DECK: SECRET SPOTLIGHT CHALLENGE (AUTO-SCORING & SPEED FEED) -->
     <div id="deck-phase-3" class="hidden w-full space-y-3">
-      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl text-center">
-        <span class="text-amber-400 font-mono text-xs font-bold uppercase tracking-wider block mb-0.5">Round 3: Zoom Charades</span>
-        <h2 class="text-2xl font-black text-white mb-1">Secret Spotlight Challenge</h2>
-        <p class="text-xs text-slate-300">Spotlighted family acts out a scenario! Class races to guess Option Number in Zoom Chat Waterfall!</p>
+      <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl shadow-xl text-center flex justify-between items-center">
+        <div class="text-left">
+          <span class="text-amber-400 font-mono text-[10px] font-bold uppercase tracking-wider block">Round 3: Zoom Charades</span>
+          <h2 class="text-xl font-black text-white">Secret Spotlight Challenge</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] font-mono text-cyan-300 bg-cyan-950 border border-cyan-800 px-3 py-1 rounded-full font-bold">Auto-Scoring Enabled: 1st (+30) | 2nd (+20) | 3rd (+10) | Correct (+5)</span>
+          <button id="p3-close-btn" onclick="closePhase3Guessing()" class="hidden bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 text-xs font-bold px-3 py-1.5 rounded-xl">
+            Close Guessing
+          </button>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl text-xs"><span class="font-mono text-cyan-400 font-bold block mb-1 text-sm">Option 1: 2.4 GHz vs 5 GHz Wi-Fi</span> Act out heavy bass passing through walls vs super fast speed.</div>
-        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl text-xs"><span class="font-mono text-cyan-400 font-bold block mb-1 text-sm">Option 2: Human Firewall</span> Act out blocking bad guys while letting safe traffic through.</div>
-        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl text-xs"><span class="font-mono text-cyan-400 font-bold block mb-1 text-sm">Option 3: Public Wi-Fi Trap</span> Act out someone snooping on free coffee shop Wi-Fi banking.</div>
-        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl text-xs md:col-span-1 md:col-start-1"><span class="font-mono text-cyan-400 font-bold block mb-1 text-sm">Option 4: MFA Digital Armor</span> Act out entering a password, then tapping phone text code lock.</div>
-        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl text-xs md:col-span-2"><span class="font-mono text-cyan-400 font-bold block mb-1 text-sm">Option 5: The DNS Phonebook</span> Act out looking up website names to find IP numbers.</div>
+      <!-- 5 REDESIGNED SCENARIO CARDS WITH INSTANT GUESSING LAUNCHERS -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-2.5">
+        
+        <div class="bg-slate-900 border-2 border-cyan-500/50 p-3 rounded-2xl shadow-xl flex flex-col justify-between text-left">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="bg-cyan-950 text-cyan-300 border border-cyan-800 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">Opt 1</span>
+              <span class="text-xl">🛜</span>
+            </div>
+            <h3 class="font-bold text-cyan-400 text-xs mb-1">2.4 GHz vs 5 GHz</h3>
+            <p class="text-[10px] text-slate-300 leading-tight">Heavy bass passing walls vs super fast speed.</p>
+          </div>
+          <button onclick="openPhase3Guessing(0)" class="mt-3 bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-700 text-[10px] font-bold py-1.5 px-2 rounded-xl">
+            🔓 Open Guessing
+          </button>
+        </div>
+
+        <div class="bg-slate-900 border-2 border-rose-500/50 p-3 rounded-2xl shadow-xl flex flex-col justify-between text-left">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="bg-rose-950 text-rose-300 border border-rose-800 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">Opt 2</span>
+              <span class="text-xl">🧱</span>
+            </div>
+            <h3 class="font-bold text-rose-400 text-xs mb-1">Human Firewall</h3>
+            <p class="text-[10px] text-slate-300 leading-tight">Block bad guys while letting safe traffic through.</p>
+          </div>
+          <button onclick="openPhase3Guessing(1)" class="mt-3 bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-700 text-[10px] font-bold py-1.5 px-2 rounded-xl">
+            🔓 Open Guessing
+          </button>
+        </div>
+
+        <div class="bg-slate-900 border-2 border-amber-500/50 p-3 rounded-2xl shadow-xl flex flex-col justify-between text-left">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">Opt 3</span>
+              <span class="text-xl">☕</span>
+            </div>
+            <h3 class="font-bold text-amber-400 text-xs mb-1">Public Wi-Fi Trap</h3>
+            <p class="text-[10px] text-slate-300 leading-tight">Snooping on unencrypted coffee shop banking.</p>
+          </div>
+          <button onclick="openPhase3Guessing(2)" class="mt-3 bg-amber-950 hover:bg-amber-900 text-amber-300 border border-amber-700 text-[10px] font-bold py-1.5 px-2 rounded-xl">
+            🔓 Open Guessing
+          </button>
+        </div>
+
+        <div class="bg-slate-900 border-2 border-emerald-500/50 p-3 rounded-2xl shadow-xl flex flex-col justify-between text-left">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">Opt 4</span>
+              <span class="text-xl">🛡️</span>
+            </div>
+            <h3 class="font-bold text-emerald-400 text-xs mb-1">MFA Digital Armor</h3>
+            <p class="text-[10px] text-slate-300 leading-tight">Password entered, then tapping phone text code lock.</p>
+          </div>
+          <button onclick="openPhase3Guessing(3)" class="mt-3 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 text-[10px] font-bold py-1.5 px-2 rounded-xl">
+            🔓 Open Guessing
+          </button>
+        </div>
+
+        <div class="bg-slate-900 border-2 border-purple-500/50 p-3 rounded-2xl shadow-xl flex flex-col justify-between text-left">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="bg-purple-950 text-purple-300 border border-purple-800 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">Opt 5</span>
+              <span class="text-xl">📖</span>
+            </div>
+            <h3 class="font-bold text-purple-400 text-xs mb-1">DNS Phonebook</h3>
+            <p class="text-[10px] text-slate-300 leading-tight">Looking up website names to find IP numbers.</p>
+          </div>
+          <button onclick="openPhase3Guessing(4)" class="mt-3 bg-purple-950 hover:bg-purple-900 text-purple-300 border border-purple-700 text-[10px] font-bold py-1.5 px-2 rounded-xl">
+            🔓 Open Guessing
+          </button>
+        </div>
+
+      </div>
+
+      <!-- LIVE SPEED FEED FOR INCOMING GUESSES -->
+      <div id="p3-speed-feed-container" class="hidden bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl">
+        <div class="flex justify-between items-center mb-2">
+          <h3 id="p3-speed-feed-title" class="text-xs font-black text-cyan-400 uppercase tracking-wider">⚡ LIVE SPEED FEED</h3>
+          <button onclick="scorePhase3Round()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-1.5 rounded-xl text-xs shadow-lg">
+            ✅ Score Round & Award Points
+          </button>
+        </div>
+        <div id="p3-feed-list" class="flex flex-wrap gap-2 max-h-28 overflow-y-auto p-2 bg-slate-950 rounded-xl border border-slate-800">
+          <p class="text-xs text-slate-500 italic">Waiting for families to submit guesses on mobile...</p>
+        </div>
       </div>
     </div>
 
@@ -320,7 +429,6 @@
         <h2 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 mb-4">
           FINAL COMMAND PODIUM
         </h2>
-        <!-- 3-Column Podium Display -->
         <div id="podium-display" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end max-w-4xl mx-auto pt-2"></div>
       </div>
     </div>
@@ -330,10 +438,10 @@
   <!-- =================================================================== -->
   <!-- 2. SCOREKEEPER VIEW (?role=scorekeeper) - KRISTINA PHASE 3 EXCLUSIVE-->
   <!-- =================================================================== -->
-  <div id="role-scorekeeper" class="hidden w-full max-w-xl">
+  <div id="role-scorekeeper" class="hidden w-full max-w-2xl">
     <header class="mb-4 text-center border-b border-slate-800 pb-3">
-      <h1 class="text-xl font-extrabold text-amber-400">⚡ KRISTINA'S PHASE 3 PANEL</h1>
-      <p class="text-xs text-slate-400 mt-1">Tap buttons to award Spotlight (+50) & Chat Waterfall (+30 / +10) points</p>
+      <h1 class="text-xl font-extrabold text-amber-400">⚡ KRISTINA'S SCOREKEEPER PANEL</h1>
+      <p class="text-xs text-slate-400 mt-1">Award +50 Spotlight Performance points or tap Fun Bonus to roll random (+5 / +10) vibes points!</p>
     </header>
 
     <div id="sk-teams-list" class="space-y-2">
@@ -344,7 +452,18 @@
   <!-- =================================================================== -->
   <!-- 3. STUDENT / FAMILY MOBILE VIEW (?role=player)                      -->
   <!-- =================================================================== -->
-  <div id="role-player" class="hidden w-full max-w-md flex flex-col items-center">
+  <div id="role-player" class="hidden w-full max-w-md flex flex-col items-center relative">
+
+    <!-- CELEBRATORY BONUS ANIMATION OVERLAY -->
+    <div id="player-bonus-overlay" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 text-center">
+      <div class="bg-gradient-to-b from-amber-950 via-slate-900 to-amber-950 border-4 border-amber-400 p-8 rounded-3xl shadow-2xl animate-pop-in max-w-xs w-full flex flex-col items-center">
+        <div class="text-6xl mb-3 animate-bounce">🎉 🎲 🌟</div>
+        <h3 id="bonus-overlay-title" class="text-xl font-black text-amber-300 uppercase tracking-widest mb-1">GOOD VIBES BONUS!</h3>
+        <p class="text-xs text-slate-300 mb-4">Awarded by Scorekeeper</p>
+        <div id="bonus-overlay-pts" class="text-5xl font-black font-mono text-emerald-400 mb-3 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]">+10 PTS</div>
+        <span class="text-[10px] font-mono text-amber-400 uppercase tracking-widest animate-pulse font-bold">Keep up the awesome energy!</span>
+      </div>
+    </div>
 
     <!-- Sign-In Box -->
     <div id="player-signin" class="w-full bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl text-center">
@@ -381,10 +500,36 @@
         </div>
       </div>
 
+      <!-- Phase 3 Charades Touch Pad -->
+      <div id="player-p3-pad" class="hidden bg-slate-900 border-2 border-amber-500/50 p-5 rounded-2xl shadow-2xl">
+        <span class="text-amber-400 font-mono text-xs font-bold uppercase block mb-1">Phase 3: Zoom Charades</span>
+        <p class="text-sm font-bold text-white mb-4">Which Option is the spotlighted family acting out?</p>
+        
+        <div class="grid grid-cols-1 gap-2.5">
+          <button onclick="submitP3Answer(0)" class="p3-opt-btn bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 font-bold py-3 px-4 rounded-xl text-left text-sm flex items-center justify-between">
+            <span>Option 1: 2.4 GHz vs 5 GHz Wi-Fi</span><span>🛜</span>
+          </button>
+          <button onclick="submitP3Answer(1)" class="p3-opt-btn bg-rose-950 hover:bg-rose-900 border border-rose-700 text-rose-300 font-bold py-3 px-4 rounded-xl text-left text-sm flex items-center justify-between">
+            <span>Option 2: Human Firewall</span><span>🧱</span>
+          </button>
+          <button onclick="submitP3Answer(2)" class="p3-opt-btn bg-amber-950 hover:bg-amber-900 border border-amber-700 text-amber-300 font-bold py-3 px-4 rounded-xl text-left text-sm flex items-center justify-between">
+            <span>Option 3: Public Wi-Fi Trap</span><span>☕</span>
+          </button>
+          <button onclick="submitP3Answer(3)" class="p3-opt-btn bg-emerald-950 hover:bg-emerald-900 border border-emerald-700 text-emerald-300 font-bold py-3 px-4 rounded-xl text-left text-sm flex items-center justify-between">
+            <span>Option 4: MFA Digital Armor</span><span>🛡️</span>
+          </button>
+          <button onclick="submitP3Answer(4)" class="p3-opt-btn bg-purple-950 hover:bg-purple-900 border border-purple-700 text-purple-300 font-bold py-3 px-4 rounded-xl text-left text-sm flex items-center justify-between">
+            <span>Option 5: DNS Phonebook</span><span>📖</span>
+          </button>
+        </div>
+
+        <div id="player-p3-msg" class="mt-4 p-3 rounded-xl text-center font-bold text-sm hidden"></div>
+      </div>
+
       <!-- Waiting Indicator -->
       <div id="player-idle-msg" class="bg-slate-900/50 border border-slate-800/80 p-6 rounded-2xl text-center">
         <p class="text-slate-300 font-medium text-sm">📺 Keep eyes on the main Zoom screen!</p>
-        <p class="text-xs text-slate-500 mt-1">Quiz touch pad will open here automatically during Phase 2.</p>
+        <p class="text-xs text-slate-500 mt-1">Touch pads will open here automatically during active rounds.</p>
       </div>
     </div>
   </div>
@@ -506,11 +651,13 @@
     let myTeamId = localStorage.getItem("myTeamId") || null;
     let myTeamName = localStorage.getItem("myTeamName") || null;
     let currentQ = null;
+    let currentQStartTime = null;
 
     if (myTeamId && myTeamName) {
       document.getElementById("player-signin").classList.add("hidden");
       document.getElementById("player-hub").classList.remove("hidden");
       document.getElementById("player-squad-name").innerText = myTeamName;
+      listenForPlayerBonuses(myTeamId);
     }
 
     function joinGame() {
@@ -528,8 +675,30 @@
       document.getElementById("player-signin").classList.add("hidden");
       document.getElementById("player-hub").classList.remove("hidden");
       document.getElementById("player-squad-name").innerText = myTeamName;
+      listenForPlayerBonuses(myTeamId);
     }
 
+    // LISTEN FOR KRISTINA BONUS ANIMATION EVENT
+    function listenForPlayerBonuses(teamId) {
+      db.ref(`teams/${teamId}/lastBonus`).on("value", (snapshot) => {
+        const bonus = snapshot.val();
+        if (!bonus) return;
+        
+        // Show celebration overlay if bonus was awarded within last 10 seconds
+        if (Date.now() - bonus.time < 10000) {
+          const overlay = document.getElementById("player-bonus-overlay");
+          document.getElementById("bonus-overlay-title").innerText = bonus.title;
+          document.getElementById("bonus-overlay-pts").innerText = `+${bonus.pts} PTS`;
+          
+          overlay.classList.remove("hidden");
+          setTimeout(() => {
+            overlay.classList.add("hidden");
+          }, 4500);
+        }
+      });
+    }
+
+    // PHASE 2 ANSWER SUBMISSION
     function submitAnswer(optionIndex) {
       if (!myTeamId || !currentQ) return;
       
@@ -545,14 +714,37 @@
       });
     }
 
+    // PHASE 3 GUESS SUBMISSION
+    function submitP3Answer(optionIndex) {
+      if (!myTeamId) return;
+
+      db.ref(`phase3Answers/${myTeamId}`).set({
+        choice: optionIndex,
+        timestamp: Date.now(),
+        teamName: myTeamName
+      });
+
+      const msgBox = document.getElementById("player-p3-msg");
+      msgBox.className = "mt-4 p-3 rounded-xl text-center font-bold text-sm bg-amber-950/80 border border-amber-500/40 text-amber-300";
+      msgBox.innerText = "✅ Guess Submitted! Watch Zoom screen for results.";
+      msgBox.classList.remove("hidden");
+
+      document.querySelectorAll(".p3-opt-btn").forEach(b => {
+        b.disabled = true;
+        b.classList.add("opacity-50", "cursor-not-allowed");
+      });
+    }
+
     // -------------------------------------------------------------------
     // PRESENTER & SCOREKEEPER FUNCTIONS
     // -------------------------------------------------------------------
     let currentActiveQ = null;
 
+    // LAUNCH PHASE 2 QUESTION WITH TIME-DECAY TIMESTAMP
     function launchQuestion(index) {
       currentActiveQ = questions[index];
-      db.ref("gameState").set({ activeQuestion: currentActiveQ });
+      const startTime = Date.now();
+      db.ref("gameState").set({ activeQuestion: currentActiveQ, startTime: startTime });
       document.getElementById("p-status").innerText = `Live: Q${index + 1}`;
       document.getElementById("p-status").className = "text-xs font-mono bg-cyan-950 text-cyan-400 border border-cyan-700 px-2.5 py-0.5 rounded-full animate-pulse";
     }
@@ -564,22 +756,85 @@
       document.getElementById("p-status").className = "text-xs font-mono bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full";
     }
 
+    // EVALUATE PHASE 2 QUESTION WITH TIME-DECAY SCORING & BADGING
     function scoreCurrentQuestion() {
       if (!currentActiveQ) return alert("No active question is currently launched!");
 
-      db.ref(`answers/q${currentActiveQ.id}`).once("value", (snapshot) => {
-        const answers = snapshot.val() || {};
-        let rewardedCount = 0;
+      db.ref("gameState/startTime").once("value", (timeSnap) => {
+        const qStartTime = timeSnap.val() || Date.now();
+
+        db.ref(`answers/q${currentActiveQ.id}`).once("value", (snapshot) => {
+          const answers = snapshot.val() || {};
+          let rewardedCount = 0;
+          
+          Object.keys(answers).forEach(teamId => {
+            const ans = answers[teamId];
+            if (ans.choice === currentActiveQ.correct) {
+              const elapsedSec = Math.max(0, (ans.timestamp - qStartTime) / 1000);
+              const pointDeduction = Math.floor(elapsedSec / 2);
+              const pointsAwarded = Math.max(10, 20 - pointDeduction); // Min floor 10 PTS
+
+              db.ref(`teams/${teamId}/score`).transaction(s => (s || 0) + pointsAwarded);
+              rewardedCount++;
+            }
+          });
+
+          // Mark Question Completed in DB
+          db.ref(`completedQuestions/${currentActiveQ.id}`).set(true);
+
+          alert(`✅ Evaluated Q${currentActiveQ.id + 1}! Awarded time-decay points (10–20 PTS) to ${rewardedCount} team(s).`);
+          closeQuiz();
+        });
+      });
+    }
+
+    // PHASE 3 PRESENTER CONTROLS
+    let activePhase3Option = null;
+
+    function openPhase3Guessing(optionIndex) {
+      activePhase3Option = optionIndex;
+      db.ref("phase3Answers").remove(); // Clear previous guesses
+      db.ref("gameState/activePhase3").set({ option: optionIndex, startTime: Date.now() });
+
+      document.getElementById("p3-speed-feed-container").classList.remove("hidden");
+      document.getElementById("p3-close-btn").classList.remove("hidden");
+      document.getElementById("p3-speed-feed-title").innerText = `⚡ LIVE SPEED FEED (OPTION ${optionIndex + 1})`;
+    }
+
+    function closePhase3Guessing() {
+      db.ref("gameState/activePhase3").remove();
+      document.getElementById("p3-speed-feed-container").classList.add("hidden");
+      document.getElementById("p3-close-btn").classList.add("hidden");
+    }
+
+    function scorePhase3Round() {
+      if (activePhase3Option === null) return alert("No active Phase 3 round is open!");
+
+      db.ref("phase3Answers").once("value", (snapshot) => {
+        const guessesObj = snapshot.val() || {};
+        const guessesArray = Object.keys(guessesObj).map(teamId => ({ teamId, ...guessesObj[teamId] }));
         
-        Object.keys(answers).forEach(teamId => {
-          if (answers[teamId].choice === currentActiveQ.correct) {
-            db.ref(`teams/${teamId}/score`).transaction(s => (s || 0) + 20);
-            rewardedCount++;
-          }
+        // Filter correct guesses & sort by speed
+        const correctGuesses = guessesArray.filter(g => g.choice === activePhase3Option);
+        correctGuesses.sort((a, b) => a.timestamp - b.timestamp);
+
+        const p3Results = {};
+
+        correctGuesses.forEach((guess, index) => {
+          let pts = 5; // Default correct guess
+          if (index === 0) pts = 30;     // 1st Correct
+          else if (index === 1) pts = 20; // 2nd Correct
+          else if (index === 2) pts = 10; // 3rd Correct
+
+          db.ref(`teams/${guess.teamId}/score`).transaction(s => (s || 0) + pts);
+          p3Results[guess.teamId] = { pts, rank: index + 1, correct: true };
         });
 
-        alert(`✅ Awarded +20 points to ${rewardedCount} team(s) with the correct answer!`);
-        closeQuiz();
+        // Store result badges for mobile players
+        db.ref("gameState/phase3Results").set(p3Results);
+
+        alert(`✅ Phase 3 Scored! Awarded Tiered Points: 1st (+30), 2nd (+20), 3rd (+10), Correct (+5).`);
+        closePhase3Guessing();
       });
     }
 
@@ -587,12 +842,34 @@
       db.ref(`teams/${teamId}/score`).transaction(s => (s || 0) + amount);
     }
 
-    // CLEAR ALL TEAMS & RESET DATABASE
+    // KRISTINA SPOTLIGHT PERFORMANCE BONUS (+50) WITH ANIMATION TRIGGER
+    function awardSpotlightBonus(teamId) {
+      db.ref(`teams/${teamId}/score`).transaction(s => (s || 0) + 50);
+      db.ref(`teams/${teamId}/lastBonus`).set({
+        title: "🌟 SPOTLIGHT PERFORMANCE!",
+        pts: 50,
+        time: Date.now()
+      });
+    }
+
+    // KRISTINA FUN BONUS (+5 OR +10) WITH ANIMATION TRIGGER
+    function awardFunBonus(teamId) {
+      const bonus = Math.random() < 0.5 ? 5 : 10;
+      db.ref(`teams/${teamId}/score`).transaction(s => (s || 0) + bonus);
+      db.ref(`teams/${teamId}/lastBonus`).set({
+        title: "🎲 GOOD VIBES BONUS!",
+        pts: bonus,
+        time: Date.now()
+      });
+    }
+
     function clearAllTeams() {
       if (confirm("⚠️ Are you sure you want to delete ALL enlisted squads and reset game data? This cannot be undone!")) {
         db.ref("teams").remove();
         db.ref("answers").remove();
         db.ref("gameState").remove();
+        db.ref("completedQuestions").remove();
+        db.ref("phase3Answers").remove();
         localStorage.removeItem("myTeamId");
         localStorage.removeItem("myTeamName");
         alert("✅ Database Reset! All teams have been cleared.");
@@ -607,10 +884,11 @@
     db.ref("gameState").on("value", (snapshot) => {
       const state = snapshot.val() || {};
       
+      // 1. Phase 2 Active Question Updates
       if (state.activeQuestion) {
         currentQ = state.activeQuestion;
         
-        // Update Presenter View
+        // Presenter Stage
         document.getElementById("presenter-quiz-stage").classList.remove("hidden");
         document.getElementById("presenter-q-num").innerText = `Question ${currentQ.id + 1}`;
         document.getElementById("presenter-q-text").innerText = currentQ.text;
@@ -626,8 +904,9 @@
           `;
         });
 
-        // Update Mobile Player View
+        // Mobile Player Touch Pad
         document.getElementById("player-quiz-pad").classList.remove("hidden");
+        document.getElementById("player-p3-pad").classList.add("hidden");
         document.getElementById("player-idle-msg").classList.add("hidden");
         document.getElementById("player-q-num").innerText = `Question ${currentQ.id + 1}`;
         document.getElementById("player-q-text").innerText = currentQ.text;
@@ -655,6 +934,80 @@
         document.getElementById("presenter-quiz-stage").classList.add("hidden");
         document.getElementById("player-quiz-pad").classList.add("hidden");
         document.getElementById("player-idle-msg").classList.remove("hidden");
+      }
+
+      // 2. Phase 3 Active Guessing Updates (Mobile Keypad)
+      if (state.activePhase3) {
+        document.getElementById("player-p3-pad").classList.remove("hidden");
+        document.getElementById("player-quiz-pad").classList.add("hidden");
+        document.getElementById("player-idle-msg").classList.add("hidden");
+        document.getElementById("player-p3-msg").classList.add("hidden");
+
+        document.querySelectorAll(".p3-opt-btn").forEach(b => {
+          b.disabled = false;
+          b.classList.remove("opacity-50", "cursor-not-allowed");
+        });
+      } else {
+        document.getElementById("player-p3-pad").classList.add("hidden");
+      }
+
+      // 3. Phase 3 Mobile Result Badges
+      if (state.phase3Results && myTeamId && state.phase3Results[myTeamId]) {
+        const res = state.phase3Results[myTeamId];
+        const msgBox = document.getElementById("player-p3-msg");
+        msgBox.classList.remove("hidden");
+        
+        if (res.rank === 1) {
+          msgBox.className = "mt-4 p-3 rounded-xl text-center font-bold text-sm bg-emerald-950 border border-emerald-500 text-emerald-300";
+          msgBox.innerText = "🥇 1ST PLACE CORRECT GUESS! (+30 PTS)";
+        } else if (res.rank === 2) {
+          msgBox.className = "mt-4 p-3 rounded-xl text-center font-bold text-sm bg-cyan-950 border border-cyan-500 text-cyan-300";
+          msgBox.innerText = "🥈 2ND PLACE CORRECT GUESS! (+20 PTS)";
+        } else if (res.rank === 3) {
+          msgBox.className = "mt-4 p-3 rounded-xl text-center font-bold text-sm bg-amber-950 border border-amber-500 text-amber-300";
+          msgBox.innerText = "🥉 3RD PLACE CORRECT GUESS! (+10 PTS)";
+        } else {
+          msgBox.className = "mt-4 p-3 rounded-xl text-center font-bold text-sm bg-slate-900 border border-slate-700 text-slate-200";
+          msgBox.innerText = "🎯 CORRECT GUESS! (+5 PTS)";
+        }
+      }
+    });
+
+    // Listen for Completed Questions to Update Launch Button Badging
+    db.ref("completedQuestions").on("value", (snapshot) => {
+      const completed = snapshot.val() || {};
+      for (let i = 0; i < 5; i++) {
+        const btn = document.getElementById(`qbtn-${i}`);
+        if (btn) {
+          if (completed[i]) {
+            btn.className = "bg-emerald-950/80 text-emerald-400 border border-emerald-700 font-bold py-1.5 px-1 rounded-xl text-xs cursor-default";
+            btn.innerText = `✅ Q${i + 1}`;
+          } else {
+            btn.className = "bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-1.5 px-1 rounded-xl text-xs";
+            btn.innerText = `Q${i + 1}`;
+          }
+        }
+      }
+    });
+
+    // Listen for Phase 3 Guesses Real-Time Speed Feed
+    db.ref("phase3Answers").on("value", (snapshot) => {
+      const guessesObj = snapshot.val() || {};
+      const list = document.getElementById("p3-feed-list");
+      list.innerHTML = "";
+
+      const keys = Object.keys(guessesObj);
+      if (keys.length === 0) {
+        list.innerHTML = `<p class="text-xs text-slate-500 italic">Waiting for families to submit guesses on mobile...</p>`;
+      } else {
+        keys.forEach((teamId, idx) => {
+          const g = guessesObj[teamId];
+          list.innerHTML += `
+            <span class="bg-slate-900 border border-slate-700 text-amber-300 text-xs font-mono font-bold px-2.5 py-1 rounded-full shadow-sm">
+              #${idx + 1} ${g.teamName || teamId} (Opt ${g.choice + 1})
+            </span>
+          `;
+        });
       }
     });
 
@@ -720,7 +1073,6 @@
         podium.innerHTML = "";
         const top3 = teamsArray.slice(0, 3);
         
-        // Re-order for 3D Podium: 2nd place on Left, 1st in Center, 3rd on Right
         const podiumOrder = [];
         if (top3[1]) podiumOrder.push({ ...top3[1], rank: "🥈 2ND PLACE", style: "border-slate-300 bg-slate-900", height: "h-40" });
         if (top3[0]) podiumOrder.push({ ...top3[0], rank: "🥇 CHAMPIONS", style: "border-amber-400 bg-amber-950/40 scale-105 z-10", height: "h-48" });
@@ -746,15 +1098,14 @@
       } else {
         teamsArray.forEach(team => {
           skList.innerHTML += `
-            <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center justify-between gap-2 shadow-md">
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl flex items-center justify-between gap-2 shadow-md">
               <div>
-                <span class="font-bold text-cyan-400 text-xs block">${team.name}</span>
+                <span class="font-bold text-cyan-400 text-sm block">${team.name}</span>
                 <span class="font-mono text-emerald-400 text-xs font-black">${team.score} PTS</span>
               </div>
-              <div class="flex gap-1">
-                <button onclick="addPoints('${team.id}', 50)" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 text-xs font-bold py-1.5 px-2 rounded-lg border border-emerald-700/60">+50 (Spotlight)</button>
-                <button onclick="addPoints('${team.id}', 30)" class="bg-cyan-950 hover:bg-cyan-900 text-cyan-300 text-xs font-bold py-1.5 px-2 rounded-lg border border-cyan-700/60">+30 (1st Chat)</button>
-                <button onclick="addPoints('${team.id}', 10)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold py-1.5 px-2 rounded-lg border border-slate-700">+10 (2nd Chat)</button>
+              <div class="flex gap-2">
+                <button onclick="awardFunBonus('${team.id}')" class="bg-purple-950 hover:bg-purple-900 text-purple-300 text-xs font-bold py-2 px-3 rounded-xl border border-purple-700/60">🎲 Fun Bonus (+5/+10)</button>
+                <button onclick="awardSpotlightBonus('${team.id}')" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 text-xs font-bold py-2 px-3 rounded-xl border border-emerald-700/60">+50 (Spotlight Performance)</button>
               </div>
             </div>
           `;
