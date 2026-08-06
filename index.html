@@ -10,122 +10,149 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col items-center p-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col items-center p-4 selection:bg-cyan-500 selection:text-slate-950">
 
-  <!-- TOP NAV / HEADER -->
-  <header class="w-full max-w-2xl flex justify-between items-center mb-6 mt-2">
-    <div>
-      <span class="text-cyan-400 text-xs font-mono tracking-widest uppercase">Military Cyber Division</span>
-      <h1 class="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-        OPERATION: NETWORK
+  <!-- =================================================================== -->
+  <!-- 1. PRESENTER VIEW (?role=presenter) - ZOOM SHARE & QUIZ CONTROL    -->
+  <!-- =================================================================== -->
+  <div id="role-presenter" class="hidden w-full max-w-4xl flex flex-col items-center">
+    <header class="text-center my-4">
+      <span class="text-cyan-400 text-sm font-mono tracking-widest uppercase font-bold">CompTIA Cyber Division</span>
+      <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
+        OPERATION: HOUSEHOLD NETWORK
       </h1>
-    </div>
-    <!-- Admin / Scorekeeper Toggle Button -->
-    <button onclick="toggleAdminPanel()" class="text-xs bg-slate-900 hover:bg-slate-800 text-amber-400 border border-slate-800 px-3 py-2 rounded-xl font-bold flex items-center gap-1 transition shadow-md">
-      <span>⚡</span> Host Panel
-    </button>
-  </header>
+    </header>
 
-  <!-- ------------------------------------------------------------------- -->
-  <!-- VIEW 1: KRISTINA'S ADMIN / SCOREKEEPER PANEL (Hidden by Default)    -->
-  <!-- ------------------------------------------------------------------- -->
-  <div id="view-admin" class="hidden w-full max-w-2xl bg-slate-900 border border-amber-500/40 p-5 rounded-2xl mb-6 shadow-2xl">
-    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-      <h2 class="text-lg font-extrabold text-amber-400 flex items-center gap-2">
-        <span>⚡</span> KRISTINA'S COMMAND PANEL
-      </h2>
-      <span id="status-indicator" class="text-xs font-mono bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full">Idle</span>
-    </div>
-
-    <!-- Quiz Launch Buttons -->
-    <div class="mb-5">
-      <p class="text-xs text-slate-400 mb-2 font-bold uppercase tracking-wider">Round 2: Quiz Controls</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
-        <button onclick="launchQuestion(0)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2 px-3 rounded-xl text-xs text-left">
-          1️⃣ Launch Q1 (HTTPS Port 443)
-        </button>
-        <button onclick="launchQuestion(1)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2 px-3 rounded-xl text-xs text-left">
-          2️⃣ Launch Q2 (Public Wi-Fi)
-        </button>
-        <button onclick="launchQuestion(2)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2 px-3 rounded-xl text-xs text-left">
-          3️⃣ Launch Q3 (MFA Armor)
-        </button>
-        <button onclick="launchQuestion(3)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2 px-3 rounded-xl text-xs text-left">
-          4️⃣ Launch Q4 (2.4 GHz Bass)
-        </button>
-        <button onclick="launchQuestion(4)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2 px-3 rounded-xl text-xs text-left md:col-span-2">
-          5️⃣ Launch Q5 (DNS Phonebook)
-        </button>
+    <!-- PRESENTER QUIZ CONTROL DECK -->
+    <section class="w-full bg-slate-900 border border-slate-800 p-5 rounded-2xl mb-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-sm font-bold text-cyan-400 uppercase tracking-wider">🎯 Presenter Quiz Launcher</h2>
+        <span id="p-status" class="text-xs font-mono bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full">Idle</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+        <button onclick="launchQuestion(0)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs text-left">1️⃣ Q1: HTTPS Port 443</button>
+        <button onclick="launchQuestion(1)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs text-left">2️⃣ Q2: Public Wi-Fi Hazard</button>
+        <button onclick="launchQuestion(2)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs text-left">3️⃣ Q3: MFA Armor</button>
+        <button onclick="launchQuestion(3)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs text-left">4️⃣ Q4: 2.4 GHz Bass</button>
+        <button onclick="launchQuestion(4)" class="bg-slate-800 hover:bg-cyan-900/60 text-cyan-200 border border-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs text-left md:col-span-2">5️⃣ Q5: DNS Phonebook</button>
       </div>
 
       <div class="flex gap-2">
-        <button onclick="scoreCurrentQuestion()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs shadow-lg transition">
-          ✅ Award Points for Question (+20)
+        <button onclick="scoreCurrentQuestion()" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg transition">
+          ✅ Evaluate Answers & Award Points (+20)
         </button>
-        <button onclick="closeQuiz()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 font-bold py-2.5 px-3 rounded-xl text-xs">
+        <button onclick="closeQuiz()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 font-bold py-3 px-4 rounded-xl text-xs">
           Close Quiz
         </button>
       </div>
-    </div>
+    </section>
 
-    <!-- Admin Manual Point Buttons -->
-    <div>
-      <div class="flex justify-between items-center mb-2">
-        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Manual Score Adjuster</p>
-        <button onclick="resetScores()" class="text-xs text-rose-400 hover:underline">Reset All Scores</button>
+    <!-- ACTIVE QUESTION STAGE (Displayed on Zoom during Quiz) -->
+    <div id="presenter-quiz-stage" class="hidden w-full bg-slate-900 border-2 border-cyan-500/50 p-6 md:p-8 rounded-3xl shadow-2xl mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <span id="presenter-q-num" class="text-cyan-400 font-mono font-bold text-lg uppercase tracking-wider">Question</span>
+        <span class="bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-mono px-3 py-1 rounded-full animate-pulse">LIVE QUIZ ROUND</span>
       </div>
-      <div id="admin-teams-control" class="space-y-2">
-        <!-- Team cards render live -->
+      <h2 id="presenter-q-text" class="text-2xl md:text-3xl font-extrabold text-white mb-6 leading-relaxed">Question text...</h2>
+      <div id="presenter-options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Displayed for Zoom audience -->
       </div>
     </div>
-  </div>
 
-  <!-- ------------------------------------------------------------------- -->
-  <!-- VIEW 2: FAMILY SQUAD SIGN-IN                                        -->
-  <!-- ------------------------------------------------------------------- -->
-  <div id="view-signin" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl w-full max-w-md text-center">
-    <h2 class="text-xl font-bold mb-2 text-emerald-400">Join Operation</h2>
-    <p class="text-xs text-slate-400 mb-4">Enter your family squad name to enlist!</p>
-    <input id="team-name-input" type="text" placeholder="e.g., Miller Squad" 
-           class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-white mb-4 focus:outline-none focus:border-cyan-400 text-center font-bold text-lg">
-    <button onclick="joinGame()" class="w-full bg-gradient-to-r from-cyan-500 to-emerald-500 hover:opacity-90 text-slate-950 font-black py-3 rounded-xl shadow-lg transition text-lg tracking-wide">
-      ENLIST TEAM
-    </button>
-  </div>
-
-  <!-- ------------------------------------------------------------------- -->
-  <!-- VIEW 3: LIVE QUIZ PLAYER (Mobile Buttons)                           -->
-  <!-- ------------------------------------------------------------------- -->
-  <div id="view-quiz" class="hidden w-full max-w-2xl bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl mb-6">
-    <div id="question-header" class="mb-6">
-      <span id="question-number" class="text-cyan-400 font-mono text-sm font-bold uppercase tracking-wider">Question</span>
-      <h2 id="question-text" class="text-xl md:text-2xl font-bold text-white mt-1 leading-snug">Waiting for next question...</h2>
-    </div>
-
-    <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- Buttons render dynamically -->
-    </div>
-
-    <div id="answer-status" class="mt-4 p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-xl text-center text-emerald-400 font-bold hidden">
-      ✅ Answer Locked In! Watch the Zoom screen for scoring.
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------------------------- -->
-  <!-- VIEW 4: LIVE COMMAND LEADERBOARD (Shared on Zoom Screen)            -->
-  <!-- ------------------------------------------------------------------- -->
-  <div id="view-leaderboard" class="w-full max-w-2xl mt-4">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-extrabold text-cyan-400 flex items-center gap-2">
+    <!-- LIVE COMMAND LEADERBOARD -->
+    <div class="w-full">
+      <h2 class="text-2xl font-black text-cyan-400 mb-4 flex items-center gap-3 border-b border-slate-800 pb-2">
         <span>🏆</span> COMMAND LEADERBOARD
       </h2>
-      <span id="player-badge" class="text-xs font-mono bg-slate-900 border border-slate-800 px-3 py-1 rounded-full text-slate-400 hidden"></span>
-    </div>
-    <div id="teams-list" class="space-y-3">
-      <!-- Live teams render here -->
+      <div id="presenter-teams-list" class="space-y-3">
+        <!-- Teams render live -->
+      </div>
     </div>
   </div>
 
+  <!-- =================================================================== -->
+  <!-- 2. SCOREKEEPER VIEW (?role=scorekeeper) - STRICTLY FOR KRISTINA     -->
+  <!-- =================================================================== -->
+  <div id="role-scorekeeper" class="hidden w-full max-w-xl">
+    <header class="mb-6 text-center border-b border-slate-800 pb-4">
+      <h1 class="text-2xl font-extrabold text-amber-400">⚡ KRISTINA'S SCOREBOARD PANEL</h1>
+      <p class="text-xs text-slate-400 mt-1">Tap buttons to quickly award points to team squads</p>
+    </header>
+
+    <section>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">Live Squad Point Adjuster</h2>
+        <button onclick="resetScores()" class="text-xs text-rose-400 hover:underline">Reset All Scores</button>
+      </div>
+      <div id="sk-teams-list" class="space-y-3">
+        <!-- Live admin controls -->
+      </div>
+    </section>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- 3. STUDENT / FAMILY MOBILE VIEW (Default) - RUNS ON SMARTPHONES     -->
+  <!-- =================================================================== -->
+  <div id="role-player" class="hidden w-full max-w-md flex flex-col items-center">
+    <header class="text-center my-4">
+      <span class="text-cyan-400 text-xs font-mono tracking-widest uppercase">Military Cyber Division</span>
+      <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
+        OPERATION: NETWORK
+      </h1>
+    </header>
+
+    <!-- Sign-In Box -->
+    <div id="player-signin" class="w-full bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl text-center">
+      <h2 class="text-xl font-bold mb-1 text-emerald-400">Enlist Your Squad</h2>
+      <p class="text-xs text-slate-400 mb-4">Enter your family team name to play!</p>
+      <input id="team-name-input" type="text" placeholder="e.g., Miller Squad" 
+             class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-white mb-4 focus:outline-none focus:border-cyan-400 text-center font-bold text-lg">
+      <button onclick="joinGame()" class="w-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-black py-3 rounded-xl shadow-lg text-lg">
+        ENLIST TEAM
+      </button>
+    </div>
+
+    <!-- Active Player Hub -->
+    <div id="player-hub" class="hidden w-full space-y-4">
+      <!-- Status Badge -->
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex justify-between items-center shadow-lg">
+        <div>
+          <span class="text-xs text-slate-400 font-mono block uppercase">Your Squad</span>
+          <span id="player-squad-name" class="font-extrabold text-cyan-400 text-lg">---</span>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-400 font-mono block uppercase">Live Score</span>
+          <span id="player-squad-score" class="font-mono font-black text-emerald-400 text-2xl">0 PTS</span>
+        </div>
+      </div>
+
+      <!-- Mobile Touch Quiz Pad (Switches on automatically) -->
+      <div id="player-quiz-pad" class="hidden bg-slate-900 border-2 border-cyan-500/50 p-5 rounded-2xl shadow-2xl">
+        <span id="player-q-num" class="text-cyan-400 font-mono text-xs font-bold uppercase block mb-1">Question</span>
+        <p id="player-q-text" class="text-base font-bold text-white mb-4">Question text...</p>
+
+        <!-- 4 Large Touch Buttons -->
+        <div id="player-buttons-grid" class="grid grid-cols-1 gap-3">
+          <!-- Touch buttons render dynamically -->
+        </div>
+
+        <div id="player-lock-msg" class="mt-4 p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-xl text-center text-emerald-400 font-bold text-sm hidden">
+          ✅ Answer Locked In! Watch Zoom for results.
+        </div>
+      </div>
+
+      <!-- Waiting Indicator -->
+      <div id="player-idle-msg" class="bg-slate-900/50 border border-slate-800/80 p-6 rounded-2xl text-center">
+        <p class="text-slate-300 font-medium text-sm">📺 Keep eyes on the main Zoom screen!</p>
+        <p class="text-xs text-slate-500 mt-1">Quiz touch pad will open here automatically when questions launch.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- JAVASCRIPT & FIREBASE LOGIC                                         -->
+  <!-- =================================================================== -->
   <script>
     // ⚙️ PASTE YOUR FIREBASE CONFIG HERE
     const firebaseConfig = {
@@ -141,68 +168,39 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Finalized 5-Question Game Bank
+    // 5 Shuffled Quiz Questions
     const questions = [
-      {
-        id: 0,
-        text: "Which port number locks down SECURE web browsing (HTTPS)—the one that shows the padlock icon when shopping online?",
-        options: ["Port 80", "Port 53", "Port 443", "Port 22"],
-        correct: 2 // Option C
-      },
-      {
-        id: 1,
-        text: "Is it safe to check online banking or pay bills while connected to free public Wi-Fi at a coffee shop or airport?",
-        options: [
-          "No! Unless using a VPN or mobile cellular data", 
-          "Yes, public Wi-Fi is completely safe", 
-          "Yes, if the network has a password", 
-          "Yes, but only on an iPad"
-        ],
-        correct: 0 // Option A
-      },
-      {
-        id: 2,
-        text: "What digital armor stops a hacker from entering your account even if they stole your exact password?",
-        options: [
-          "Changing your username", 
-          "Clearing browser history", 
-          "Unplugging the router", 
-          "Multi-Factor Authentication (MFA / 2FA)"
-        ],
-        correct: 3 // Option D
-      },
-      {
-        id: 3,
-        text: "Which Wi-Fi frequency acts like 'heavy bass' and travels much better through thick walls and across long distances?",
-        options: ["5 GHz", "2.4 GHz", "Bluetooth", "Infrared"],
-        correct: 1 // Option B
-      },
-      {
-        id: 4,
-        text: "Which networking service acts as the 'Internet Phonebook,' translating website names like amazon.com into IP addresses?",
-        options: ["DNS (Domain Name System)", "Router Switch", "Port 80", "Firewall"],
-        correct: 0 // Option A
-      }
+      { id: 0, text: "Which port number locks down SECURE web browsing (HTTPS)—the one that shows the padlock icon when shopping online?", options: ["Port 80", "Port 53", "Port 443", "Port 22"], correct: 2 },
+      { id: 1, text: "Is it safe to check online banking or pay bills while connected to free public Wi-Fi at a coffee shop or airport?", options: ["No! Unless using a VPN or mobile cellular data", "Yes, public Wi-Fi is completely safe", "Yes, if the network has a password", "Yes, but only on an iPad"], correct: 0 },
+      { id: 2, text: "What digital armor stops a hacker from entering your account even if they stole your exact password?", options: ["Changing your username", "Clearing browser history", "Unplugging the router", "Multi-Factor Authentication (MFA / 2FA)"], correct: 3 },
+      { id: 3, text: "Which Wi-Fi frequency acts like 'heavy bass' and travels much better through thick walls and across long distances?", options: ["5 GHz", "2.4 GHz", "Bluetooth", "Infrared"], correct: 1 },
+      { id: 4, text: "Which networking service acts as the 'Internet Phonebook,' translating website names like amazon.com into IP addresses?", options: ["DNS (Domain Name System)", "Router Switch", "Port 80", "Firewall"], correct: 0 }
     ];
 
+    // -------------------------------------------------------------------
+    // ROUTE PARSER: DETERMINES WHICH ROLE VIEW TO DISPLAY
+    // -------------------------------------------------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    const userRole = urlParams.get('role');
+
+    if (userRole === 'presenter') {
+      document.getElementById('role-presenter').classList.remove('hidden');
+    } else if (userRole === 'scorekeeper') {
+      document.getElementById('role-scorekeeper').classList.remove('hidden');
+    } else {
+      // Default: Player Mobile View
+      document.getElementById('role-player').classList.remove('hidden');
+    }
+
+    // Player State Variables
     let myTeamId = localStorage.getItem("myTeamId") || null;
     let myTeamName = localStorage.getItem("myTeamName") || null;
     let currentQ = null;
 
     if (myTeamId && myTeamName) {
-      document.getElementById("view-signin").classList.add("hidden");
-      showPlayerBadge();
-    }
-
-    function toggleAdminPanel() {
-      const panel = document.getElementById("view-admin");
-      panel.classList.toggle("hidden");
-    }
-
-    function showPlayerBadge() {
-      const badge = document.getElementById("player-badge");
-      badge.innerText = `Squad: ${myTeamName}`;
-      badge.classList.remove("hidden");
+      document.getElementById("player-signin").classList.add("hidden");
+      document.getElementById("player-hub").classList.remove("hidden");
+      document.getElementById("player-squad-name").innerText = myTeamName;
     }
 
     function joinGame() {
@@ -217,8 +215,9 @@
 
       db.ref("teams/" + myTeamId).set({ name: name, score: 0 });
 
-      document.getElementById("view-signin").classList.add("hidden");
-      showPlayerBadge();
+      document.getElementById("player-signin").classList.add("hidden");
+      document.getElementById("player-hub").classList.remove("hidden");
+      document.getElementById("player-squad-name").innerText = myTeamName;
     }
 
     function submitAnswer(optionIndex) {
@@ -229,7 +228,7 @@
         timestamp: Date.now()
       });
 
-      document.getElementById("answer-status").classList.remove("hidden");
+      document.getElementById("player-lock-msg").classList.remove("hidden");
       document.querySelectorAll(".opt-btn").forEach(b => {
         b.disabled = true;
         b.classList.add("opacity-50", "cursor-not-allowed");
@@ -237,20 +236,22 @@
     }
 
     // -------------------------------------------------------------------
-    // ADMIN FUNCTIONS (FOR KRISTINA)
+    // PRESENTER & SCOREKEEPER FUNCTIONS
     // -------------------------------------------------------------------
+    let currentActiveQ = null;
+
     function launchQuestion(index) {
       currentActiveQ = questions[index];
       db.ref("gameState").set({ activeQuestion: currentActiveQ });
-      document.getElementById("status-indicator").innerText = `Live: Q${index + 1}`;
-      document.getElementById("status-indicator").className = "text-xs font-mono bg-cyan-950 text-cyan-400 border border-cyan-700 px-2 py-1 rounded-full animate-pulse";
+      document.getElementById("p-status").innerText = `Live: Q${index + 1}`;
+      document.getElementById("p-status").className = "text-xs font-mono bg-cyan-950 text-cyan-400 border border-cyan-700 px-2.5 py-1 rounded-full animate-pulse";
     }
 
     function closeQuiz() {
       currentActiveQ = null;
       db.ref("gameState").set({ activeQuestion: null });
-      document.getElementById("status-indicator").innerText = "Idle";
-      document.getElementById("status-indicator").className = "text-xs font-mono bg-slate-800 text-slate-400 px-2 py-1 rounded-full";
+      document.getElementById("p-status").innerText = "Idle";
+      document.getElementById("p-status").className = "text-xs font-mono bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full";
     }
 
     function scoreCurrentQuestion() {
@@ -290,81 +291,108 @@
     // -------------------------------------------------------------------
     // REALTIME DATABASE LISTENERS
     // -------------------------------------------------------------------
+    
+    // Listen for Game State changes
     db.ref("gameState").on("value", (snapshot) => {
       const state = snapshot.val() || {};
       
       if (state.activeQuestion) {
         currentQ = state.activeQuestion;
-        document.getElementById("view-quiz").classList.remove("hidden");
-        document.getElementById("question-number").innerText = `Question ${currentQ.id + 1}`;
-        document.getElementById("question-text").innerText = currentQ.text;
-        document.getElementById("answer-status").classList.add("hidden");
-
-        const grid = document.getElementById("options-grid");
-        grid.innerHTML = "";
         
+        // 1. Update Presenter View
+        document.getElementById("presenter-quiz-stage").classList.remove("hidden");
+        document.getElementById("presenter-q-num").innerText = `Question ${currentQ.id + 1}`;
+        document.getElementById("presenter-q-text").innerText = currentQ.text;
+        
+        const pGrid = document.getElementById("presenter-options-grid");
+        pGrid.innerHTML = "";
+        currentQ.options.forEach((opt, idx) => {
+          pGrid.innerHTML += `
+            <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center gap-3">
+              <span class="bg-cyan-500/20 text-cyan-400 font-mono font-bold px-3 py-1 rounded-lg text-sm">${String.fromCharCode(65 + idx)}</span>
+              <span class="text-slate-200 font-medium text-lg">${opt}</span>
+            </div>
+          `;
+        });
+
+        // 2. Update Mobile Player View
+        document.getElementById("player-quiz-pad").classList.remove("hidden");
+        document.getElementById("player-idle-msg").classList.add("hidden");
+        document.getElementById("player-q-num").innerText = `Question ${currentQ.id + 1}`;
+        document.getElementById("player-q-text").innerText = currentQ.text;
+        document.getElementById("player-lock-msg").classList.add("hidden");
+
         const btnStyles = [
           "bg-rose-600 hover:bg-rose-500 border-rose-500", 
           "bg-blue-600 hover:bg-blue-500 border-blue-500", 
           "bg-amber-600 hover:bg-amber-500 border-amber-500", 
           "bg-emerald-600 hover:bg-emerald-500 border-emerald-500"
         ];
-        
+
+        const mGrid = document.getElementById("player-buttons-grid");
+        mGrid.innerHTML = "";
         currentQ.options.forEach((opt, idx) => {
-          grid.innerHTML += `
-            <button onclick="submitAnswer(${idx})" class="opt-btn ${btnStyles[idx]} border text-white font-bold py-4 px-4 rounded-xl shadow-lg transition text-left text-base md:text-lg flex items-center gap-3 active:scale-95">
-              <span class="bg-black/30 px-3 py-1 rounded-lg font-mono text-sm">${String.fromCharCode(65 + idx)}</span>
+          mGrid.innerHTML += `
+            <button onclick="submitAnswer(${idx})" class="opt-btn ${btnStyles[idx]} border text-white font-bold py-4 px-4 rounded-xl shadow-lg transition text-left text-base flex items-center gap-3 active:scale-95">
+              <span class="bg-black/30 px-3.5 py-1.5 rounded-lg font-mono text-sm">${String.fromCharCode(65 + idx)}</span>
               <span>${opt}</span>
             </button>
           `;
         });
+
       } else {
-        document.getElementById("view-quiz").classList.add("hidden");
+        // Hide quiz stages when idle
+        document.getElementById("presenter-quiz-stage").classList.add("hidden");
+        document.getElementById("player-quiz-pad").classList.add("hidden");
+        document.getElementById("player-idle-msg").classList.remove("hidden");
       }
     });
 
+    // Listen for Team & Leaderboard updates
     db.ref("teams").on("value", (snapshot) => {
       const teamsObj = snapshot.val() || {};
       const teamsArray = Object.keys(teamsObj).map(key => ({ id: key, ...teamsObj[key] }));
       teamsArray.sort((a, b) => b.score - a.score);
 
-      // Render Zoom / Player Leaderboard
-      const listContainer = document.getElementById("teams-list");
-      listContainer.innerHTML = "";
+      // 1. Update Player Mobile Score Badge
+      if (myTeamId && teamsObj[myTeamId]) {
+        document.getElementById("player-squad-score").innerText = `${teamsObj[myTeamId].score} PTS`;
+      }
+
+      // 2. Update Presenter Leaderboard (Zoom)
+      const pList = document.getElementById("presenter-teams-list");
+      pList.innerHTML = "";
 
       if (teamsArray.length === 0) {
-        listContainer.innerHTML = `<p class="text-center text-slate-500 italic py-4">No teams enlisted yet. Standby...</p>`;
+        pList.innerHTML = `<p class="text-center text-slate-500 italic py-8 text-lg">No teams enlisted yet. Standby...</p>`;
       } else {
         teamsArray.forEach((team, index) => {
           const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "🎖️";
-          const isMyTeam = team.id === myTeamId;
-          const highlight = isMyTeam ? "border-cyan-400 bg-cyan-950/30" : "border-slate-800 bg-slate-900";
-
-          listContainer.innerHTML += `
-            <div class="flex items-center justify-between ${highlight} border p-4 rounded-xl shadow-md transition-all">
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">${medal}</span>
-                <span class="font-bold text-lg text-slate-200">${team.name} ${isMyTeam ? '<span class="text-xs text-cyan-400 font-mono">(YOU)</span>' : ''}</span>
+          pList.innerHTML += `
+            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">${medal}</span>
+                <span class="font-extrabold text-xl text-slate-100">${team.name}</span>
               </div>
-              <span class="text-2xl font-mono font-black text-emerald-400">${team.score} PTS</span>
+              <span class="text-3xl font-mono font-black text-emerald-400">${team.score} PTS</span>
             </div>
           `;
         });
       }
 
-      // Render Admin Control Cards for Kristina
-      const adminContainer = document.getElementById("admin-teams-control");
-      adminContainer.innerHTML = "";
+      // 3. Update Scorekeeper Controls (Kristina)
+      const skList = document.getElementById("sk-teams-list");
+      skList.innerHTML = "";
 
       if (teamsArray.length === 0) {
-        adminContainer.innerHTML = `<p class="text-slate-500 italic text-xs">Waiting for teams to join...</p>`;
+        skList.innerHTML = `<p class="text-slate-500 italic text-xs py-2">Waiting for teams to join...</p>`;
       } else {
         teamsArray.forEach(team => {
-          adminContainer.innerHTML += `
-            <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-2">
+          skList.innerHTML += `
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-2 shadow-md">
               <div>
-                <span class="font-bold text-cyan-400 text-sm">${team.name}</span>
-                <span class="font-mono text-emerald-400 text-xs font-black block">${team.score} PTS</span>
+                <span class="font-bold text-cyan-400 text-sm block">${team.name}</span>
+                <span class="font-mono text-emerald-400 text-xs font-black">${team.score} PTS</span>
               </div>
               <div class="flex gap-1">
                 <button onclick="addPoints('${team.id}', 10)" class="bg-slate-800 hover:bg-slate-700 text-xs font-bold py-1.5 px-2 rounded-lg border border-slate-700">+10</button>
